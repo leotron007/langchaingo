@@ -1,44 +1,55 @@
-version: "2"
+run:
+  timeout: 5m
+  tests: true
+
 linters:
-  default: none
   enable:
     - errcheck
+    - gosimple
     - govet
     - ineffassign
     - staticcheck
     - unused
-    - forbidigo
-    - funlen
-    - gosec
-    - misspell
-  settings:
-    cyclop:
-      max-complexity: 12
-    forbidigo:
-      forbid:
-        - pattern: import "[^"]+/(util|common|helpers)"
-    funlen:
-      lines: 90
-    gosec:
-      excludes:
-        - G115
-  exclusions:
-    generated: lax
-    presets:
-      - comments
-      - common-false-positives
-      - legacy
-      - std-error-handling
-    paths:
-      - internal
-      - vectorstores/bedrockknowledgebases
-formatters:
-  enable:
     - gofmt
     - goimports
-  exclusions:
-    generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
+    - misspell
+    - revive
+    - gocritic
+    - noctx
+    - bodyclose
+    - exhaustive
+    - godot
+    - gofumpt
+    - whitespace
+    - wrapcheck
+    - testifylint
+
+linters-settings:
+  goimports:
+    local-prefixes: github.com/vxcontrol/langchaingo
+  revive:
+    rules:
+      - name: exported
+        arguments:
+          - disableStutteringCheck
+  godot:
+    scope: declarations
+    capital: false
+  wrapcheck:
+    ignorePackageGlobs:
+      - github.com/vxcontrol/langchaingo/*
+  exhaustive:
+    default-signifies-exhaustive: true
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - wrapcheck
+        - errcheck
+    - path: examples/
+      linters:
+        - wrapcheck
+        - godot
+  max-issues-per-linter: 0
+  max-same-issues: 0

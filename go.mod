@@ -8,7 +8,7 @@ require (
 	github.com/cohere-ai/cohere-go/v2 v2.0.0
 	github.com/dlclark/regexp2 v1.10.0
 	github.com/dop251/goja v0.0.0-20230919151941-fc55792775de
-	github.com/google/uuid v1.4.0
+	github.com/google/uuid v1.6.0
 	github.com/ledongthuc/pdf v0.0.0-20220302134840-0c2507a12d80
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkoukk/tiktoken-go v0.1.6

@@ -70,6 +70,18 @@ type ContentChoice struct {
 	GenerationInfo map[string]any
 	// FuncCall holds function call information if the model requested a tool call.
 	FuncCall *FunctionCall
+	// ToolCalls holds all tool/function calls requested by the model in this choice.
+	// This is preferred over FuncCall when multiple tool calls may be present.
+	ToolCalls []ToolCall
+}
+
+// ToolCall represents a single tool/function call requested by the model.
+// Unlike FunctionCall, this struct is designed to support multiple concurrent
+// tool calls returned in a single response choice.
+type ToolCall struct {
+	ID        string
+	Type      string
+	FuncCall  *FunctionCall
 }
 
 // FunctionCall represents a function/tool call requested by the model.
@@ -90,7 +102,4 @@ type Model interface {
 }
 
 // ChatMessageType represents the role of a chat message sender.
-type ChatMessageType string
-
-const (
-	// ChatMessageTypeSystem represents a system-lev
+type ChatMessageT

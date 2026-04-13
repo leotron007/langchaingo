@@ -69,6 +69,7 @@ type ContentChoice struct {
 	// GenerationInfo contains additional metadata about the generation.
 	GenerationInfo map[string]any
 	// FuncCall holds function call information if the model requested a tool call.
+	// Deprecated: prefer ToolCalls which supports multiple concurrent tool calls.
 	FuncCall *FunctionCall
 	// ToolCalls holds all tool/function calls requested by the model in this choice.
 	// This is preferred over FuncCall when multiple tool calls may be present.
@@ -79,9 +80,9 @@ type ContentChoice struct {
 // Unlike FunctionCall, this struct is designed to support multiple concurrent
 // tool calls returned in a single response choice.
 type ToolCall struct {
-	ID        string
-	Type      string
-	FuncCall  *FunctionCall
+	ID       string
+	Type     string
+	FuncCall *FunctionCall
 }
 
 // FunctionCall represents a function/tool call requested by the model.
@@ -92,14 +93,4 @@ type FunctionCall struct {
 
 // Model is the interface that all LLM providers must implement.
 type Model interface {
-	// Call generates a response for a simple text prompt.
-	// Deprecated: use GenerateContent instead.
-	Call(ctx context.Context, prompt string, options ...CallOption) (string, error)
-
-	// GenerateContent generates a response for a list of message contents,
-	// supporting multimodal and multi-turn conversations.
-	GenerateContent(ctx context.Context, messages []MessageContent, options ...CallOption) (*ContentResponse, error)
-}
-
-// ChatMessageType represents the role of a chat message sender.
-type ChatMessageT
+	// Call generates a response for a 

@@ -91,14 +91,15 @@ type FunctionCall struct {
 	Arguments string
 }
 
-// TextParts is a convenience helper that returns a MessageContent with a single
-// TextContent part. Useful for quickly constructing simple chat messages without
-// manually building the Parts slice.
-func TextParts(role ChatMessageType, text string) MessageContent {
+// TextParts is a convenience helper that returns a MessageContent with the
+// given role and one or more text strings joined as separate TextContent parts.
+func TextParts(role ChatMessageType, texts ...string) MessageContent {
+	parts := make([]ContentPart, 0, len(texts))
+	for _, text := range texts {
+		parts = append(parts, TextContent{Text: text})
+	}
 	return MessageContent{
 		Role:  role,
-		Parts: []ContentPart{TextContent{Text: text}},
+		Parts: parts,
 	}
 }
-
-// Model is the interface that all LLM provider

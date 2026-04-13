@@ -91,6 +91,14 @@ type FunctionCall struct {
 	Arguments string
 }
 
-// Model is the interface that all LLM providers must implement.
-type Model interface {
-	// Call generates a response for a 
+// TextParts is a convenience helper that returns a MessageContent with a single
+// TextContent part. Useful for quickly constructing simple chat messages without
+// manually building the Parts slice.
+func TextParts(role ChatMessageType, text string) MessageContent {
+	return MessageContent{
+		Role:  role,
+		Parts: []ContentPart{TextContent{Text: text}},
+	}
+}
+
+// Model is the interface that all LLM provider

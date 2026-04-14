@@ -11,6 +11,7 @@ type CallOptions struct {
 	// MaxTokens is the maximum number of tokens to generate.
 	MaxTokens int `json:"max_tokens"`
 	// Temperature is the temperature for sampling, between 0 and 1.
+	// A value of 0 makes the model deterministic; 1 makes it more creative.
 	Temperature float64 `json:"temperature"`
 	// StopWords is a list of words to stop on.
 	StopWords []string `json:"stop_words"`
@@ -29,9 +30,11 @@ type CallOptions struct {
 	MaxLength int `json:"max_length"`
 	// RepetitionPenalty is the repetition penalty for sampling.
 	RepetitionPenalty float64 `json:"repetition_penalty"`
-	// FrequencyPenalty is the frequency penalty for sampling.
+	// FrequencyPenalty penalizes tokens that appear frequently in the output.
+	// Range is typically -2.0 to 2.0; positive values reduce repetition.
 	FrequencyPenalty float64 `json:"frequency_penalty"`
-	// PresencePenalty is the presence penalty for sampling.
+	// PresencePenalty penalizes tokens that have already appeared in the output.
+	// Range is typically -2.0 to 2.0; positive values encourage new topics.
 	PresencePenalty float64 `json:"presence_penalty"`
 	// JSONMode enables JSON output mode if supported by the model.
 	JSONMode bool `json:"json_mode"`
@@ -90,33 +93,5 @@ func WithTopP(topP float64) CallOption {
 func WithSeed(seed int) CallOption {
 	return func(o *CallOptions) {
 		o.Seed = seed
-	}
-}
-
-// WithRepetitionPenalty specifies the repetition penalty for sampling.
-func WithRepetitionPenalty(penalty float64) CallOption {
-	return func(o *CallOptions) {
-		o.RepetitionPenalty = penalty
-	}
-}
-
-// WithFrequencyPenalty specifies the frequency penalty for sampling.
-func WithFrequencyPenalty(penalty float64) CallOption {
-	return func(o *CallOptions) {
-		o.FrequencyPenalty = penalty
-	}
-}
-
-// WithPresencePenalty specifies the presence penalty for sampling.
-func WithPresencePenalty(penalty float64) CallOption {
-	return func(o *CallOptions) {
-		o.PresencePenalty = penalty
-	}
-}
-
-// WithJSONMode enables JSON output mode for models that support it.
-func WithJSONMode() CallOption {
-	return func(o *CallOptions) {
-		o.JSONMode = true
 	}
 }

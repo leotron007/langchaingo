@@ -12,6 +12,7 @@ type CallOptions struct {
 	MaxTokens int `json:"max_tokens"`
 	// Temperature is the temperature for sampling, between 0 and 1.
 	// A value of 0 makes the model deterministic; 1 makes it more creative.
+	// Defaults to 0.7 if not set.
 	Temperature float64 `json:"temperature"`
 	// StopWords is a list of words to stop on.
 	StopWords []string `json:"stop_words"`
@@ -55,6 +56,8 @@ func WithMaxTokens(maxTokens int) CallOption {
 }
 
 // WithTemperature specifies the model temperature, a value between 0 and 1.
+// A good starting point for most tasks is 0.7; use lower values for factual
+// or deterministic tasks, and higher values for creative generation.
 func WithTemperature(temperature float64) CallOption {
 	return func(o *CallOptions) {
 		o.Temperature = temperature
@@ -79,19 +82,5 @@ func WithStreamingFunc(streamingFunc func(ctx context.Context, chunk []byte) err
 func WithTopK(topK int) CallOption {
 	return func(o *CallOptions) {
 		o.TopK = topK
-	}
-}
-
-// WithTopP specifies the top-p sampling parameter.
-func WithTopP(topP float64) CallOption {
-	return func(o *CallOptions) {
-		o.TopP = topP
-	}
-}
-
-// WithSeed specifies the seed for deterministic sampling.
-func WithSeed(seed int) CallOption {
-	return func(o *CallOptions) {
-		o.Seed = seed
 	}
 }

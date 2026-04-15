@@ -43,6 +43,9 @@ type CallOptions struct {
 	// Useful when you want to compare multiple outputs and pick the best one.
 	// Note: not all providers support this; defaults to 1 if unsupported.
 	CandidateCount int `json:"candidate_count"`
+	// N is an alias for CandidateCount used by OpenAI-compatible APIs.
+	// If set and CandidateCount is 0, N will be used as the candidate count.
+	N int `json:"n,omitempty"`
 }
 
 // WithModel specifies the model name to use for generation.
@@ -72,19 +75,5 @@ func WithTemperature(temperature float64) CallOption {
 func WithStopWords(stopWords []string) CallOption {
 	return func(o *CallOptions) {
 		o.StopWords = stopWords
-	}
-}
-
-// WithStreamingFunc specifies the streaming function to use for streaming responses.
-func WithStreamingFunc(streamingFunc func(ctx context.Context, chunk []byte) error) CallOption {
-	return func(o *CallOptions) {
-		o.StreamingFunc = streamingFunc
-	}
-}
-
-// WithCandidateCount specifies how many candidate responses to generate.
-func WithCandidateCount(n int) CallOption {
-	return func(o *CallOptions) {
-		o.CandidateCount = n
 	}
 }

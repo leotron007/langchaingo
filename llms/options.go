@@ -39,6 +39,10 @@ type CallOptions struct {
 	PresencePenalty float64 `json:"presence_penalty"`
 	// JSONMode enables JSON output mode if supported by the model.
 	JSONMode bool `json:"json_mode"`
+	// CandidateCount is the number of response candidates to generate.
+	// Useful when you want to compare multiple outputs and pick the best one.
+	// Note: not all providers support this; defaults to 1 if unsupported.
+	CandidateCount int `json:"candidate_count"`
 }
 
 // WithModel specifies the model name to use for generation.
@@ -78,9 +82,9 @@ func WithStreamingFunc(streamingFunc func(ctx context.Context, chunk []byte) err
 	}
 }
 
-// WithTopK specifies the top-k sampling parameter.
-func WithTopK(topK int) CallOption {
+// WithCandidateCount specifies how many candidate responses to generate.
+func WithCandidateCount(n int) CallOption {
 	return func(o *CallOptions) {
-		o.TopK = topK
+		o.CandidateCount = n
 	}
 }

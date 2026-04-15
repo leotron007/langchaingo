@@ -92,9 +92,10 @@ type FunctionCall struct {
 }
 
 // TextParts is a convenience helper that returns a MessageContent with the
-// given role and one or more text parts. This covers the most common use case
-// of sending a plain-text message without having to manually construct
-// ContentPart slices.
+// given role and one or more text content parts assembled from the provided strings.
+// Example:
+//
+//	msg := llms.TextParts(llms.ChatMessageTypeHuman, "Hello!", "How are you?")
 func TextParts(role ChatMessageType, parts ...string) MessageContent {
 	contentParts := make([]ContentPart, 0, len(parts))
 	for _, p := range parts {
@@ -108,9 +109,9 @@ func TextParts(role ChatMessageType, parts ...string) MessageContent {
 
 // Model is the interface all LLM implementations must satisfy.
 type Model interface {
-	// Call is a simplified interface for text-in, text-out usage.
+	// Call generates a text completion for the given prompt.
 	// Deprecated: use GenerateContent instead.
 	Call(ctx context.Context, prompt string, options ...CallOption) (string, error)
-	// GenerateContent generates a response for the given content parts.
+	// GenerateContent generates a response for the given messages.
 	GenerateContent(ctx context.Context, messages []MessageContent, options ...CallOption) (*ContentResponse, error)
 }

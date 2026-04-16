@@ -12,9 +12,9 @@ require (
 	github.com/ledongthuc/pdf v0.0.0-20220302134840-0c2507a12d80
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkoukk/tiktoken-go v0.1.6
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/tmc/langchaingo v0.1.12
-	golang.org/x/net v0.20.0
+	golang.org/x/net v0.24.0
 )
 
 require (

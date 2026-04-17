@@ -101,10 +101,11 @@ func TextParts(role ChatMessageType, text string) MessageContent {
 	}
 }
 
-// Model is the interface that all LLM implementations must satisfy.
+// Model is the interface all LLM implementations must satisfy.
 type Model interface {
-	// GenerateContent generates content based on the provided messages.
-	GenerateContent(ctx context.Context, messages []MessageContent, options ...CallOption) (*ContentResponse, error)
-	// Call is a simpler interface for single-turn text generation.
+	// Call is a simplified interface for single-turn text generation.
+	// Deprecated: use GenerateContent for multi-turn and multi-modal support.
 	Call(ctx context.Context, prompt string, options ...CallOption) (string, error)
+	// GenerateContent generates a response for the given messages.
+	GenerateContent(ctx context.Context, messages []MessageContent, options ...CallOption) (*ContentResponse, error)
 }

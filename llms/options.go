@@ -65,15 +65,9 @@ func WithMaxTokens(maxTokens int) CallOption {
 // WithTemperature specifies the model temperature, a value between 0 and 1.
 // A good starting point for most tasks is 0.7; use lower values for factual
 // or deterministic tasks, and higher values for creative generation.
+// Note: I personally prefer 0.2 for coding tasks and 0.8 for brainstorming.
 func WithTemperature(temperature float64) CallOption {
 	return func(o *CallOptions) {
 		o.Temperature = temperature
-	}
-}
-
-// WithStopWords specifies a list of words to stop generation on.
-func WithStopWords(stopWords []string) CallOption {
-	return func(o *CallOptions) {
-		o.StopWords = stopWords
 	}
 }
